@@ -160,6 +160,11 @@ public class NewBraveConstellation extends ApplicationAdapter implements InputPr
             camera.position.set(0f, 0f, 0f);
             camera.lookAt(coordinate.Transform2Vector( coordinate.Hours2Declination("19° 11′ 14.2″"),coordinate.Hours2RightAscension("14h 15m 40.35s"), 10 ));
         }
+        if(keycode == Input.Keys.NUM_6)
+        {
+            camera.position.set(0f, 0f, 0f);
+            camera.lookAt(coordinate.Transform2Vector( coordinate.Hours2Declination("20° 11′ 14.2″"),coordinate.Hours2RightAscension("23h 15m 40.35s"), 10 ));
+        }
 
         return true;
     }

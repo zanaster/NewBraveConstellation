@@ -42,6 +42,7 @@ public class Constalation {
 		starMap.create3();
 		starMap.create4();
 		starMap.create5();
+		starMap.create6();
 		
         Material material = new Material(ColorAttribute.createDiffuse(Color.WHITE));
         Material material2 = new Material(ColorAttribute.createDiffuse(Color.BROWN));
@@ -111,29 +112,6 @@ public class Constalation {
         	Star s = iter.next();
         	instances.add(new ModelInstance(sphere[s.m_Size-1],coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
             }
-//        	s = iter.next();
-//        	instances.add(new ModelInstance(sphere,coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
-//        	s = iter.next();
-//        	instances.add(new ModelInstance(sphere,coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
-//        	s = iter.next();
-//        	instances.add(new ModelInstance(sphere,coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
-//        	s = iter.next();
-//        	instances.add(new ModelInstance(sphere,coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
-//        	s = iter.next();
-//        	instances.add(new ModelInstance(sphere,coordinate.Transform2Vector( s.m_Declination , s.m_RightAscension, 10)));
-        	
-//        instances.add( instance1 );
-//        instances.add( instance2 );
-//        instances.add( instance3 );
-//        instances.add( instance4 );
-//        instances.add( instance5 );
-//        instances.add( instance6 );
-//        instances.add( instance7 );
-//        instances.add( instance8 );
-//        instances.add( instance9 );
-//        instances.add( instance10 );
-//        instances.add( instance11 );
- 
         
 	}
 	
