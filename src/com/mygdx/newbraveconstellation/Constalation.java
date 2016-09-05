@@ -26,9 +26,6 @@ public class Constalation {
     private Model sphereZ;
     private ModelInstance instance;
     private StarMap starMap;
-//    private coordinate coordi;
-	
-	// LookAt position x,y,z
 	
 	public void create()
 	{
@@ -65,46 +62,6 @@ public class Constalation {
         sphereX = modelBuilder.createSphere(0.3f, 0.3f, 0.3f, 24, 24, materialX, attributes);
         sphereY = modelBuilder.createSphere(0.3f, 0.3f, 0.3f, 24, 24, materialY, attributes);
         sphereZ = modelBuilder.createSphere(0.3f, 0.3f, 0.3f, 24, 24, materialZ, attributes);
-        
-//   //     Vector3 i1 = new Vector3(10,5,0);
-//        ModelInstance instance1 = new ModelInstance(sphereBig,coordinate.Transform2Vector( 45.0f, 45.0f, 17.32));
-//        
-//        ModelInstance instance2 = new ModelInstance(sphere, new Vector3( 10, 10, 10));        
-//        
-        
-        
-//        ModelInstance instance2 = new ModelInstance(sphere[],coordinate.Transform2Vector( 19.18f, 213.91f, 10));
-//        ModelInstance instance3 = new ModelInstance(sphere,coordinate.Transform2Vector( 27.00f, 221.91f, 10));
-//        ModelInstance instance4 = new ModelInstance(sphere,coordinate.Transform2Vector( 18.18f, 208.91f, 10));
-//        ModelInstance instance5 = new ModelInstance(sphere,coordinate.Transform2Vector( 38.18f, 218.91f, 10));
-//        
-//        ModelInstance instance6 = new ModelInstance(sphere,coordinate.Transform2Vector( 33.18f, 228.91f, 10));
-//        ModelInstance instance7 = new ModelInstance(sphere,coordinate.Transform2Vector( 40.00f, 225.91f, 10));
-//        ModelInstance instance8 = new ModelInstance(sphere,coordinate.Transform2Vector( 30.18f, 217.91f, 10));
-//        ModelInstance instance9 = new ModelInstance(sphere,coordinate.Transform2Vector( 13.18f, 220.91f, 10));
-//        
-//        ModelInstance instance10 = new ModelInstance(sphere,coordinate.Transform2Vector( 51.18f, 216.91f, 10));
-//        ModelInstance instance11 = new ModelInstance(sphere,coordinate.Transform2Vector( 15.18f, 208.91f, 10));
-        
-        
-//        for ( float i = 0; i < 360; i += 10)
-//        {
-//        	instances.add(new ModelInstance(sphereBig,coordinate.Transform2Vector( 0 , i, 20)));
-//        }
-//        
-//        for ( float i = 0; i < 360; i += 10)
-//        {
-//        	
-//        	instances.add(new ModelInstance(sphereBig,coordinate.Transform2Vector( i , 0, 20)));
-//        }
-        
-//        for ( float i = 0; i < 100; i += 5)
-//        {
-//        	
-//        	instances.add(new ModelInstance(sphereZ, new Vector3( 0, 0, 2 + (i/2) )));
-//        	instances.add(new ModelInstance(sphereY, new Vector3( 0, 2 + (i/2), 0 )));
-//        	instances.add(new ModelInstance(sphereX, new Vector3( 2 + (i/2), 0,0 )));
-//        }
         
 
         Iterator<Star> iter = starMap.getInstances().iterator();
