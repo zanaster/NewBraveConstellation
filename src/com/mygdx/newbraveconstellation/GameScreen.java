@@ -16,19 +16,30 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.newbraveconstellation.StarMap.Constellation;
 
 public class GameScreen implements Screen, InputProcessor
 {
-    final NewBraveConstellation game;
-    
+	final NewBraveConstellation game;
+     
     private PerspectiveCamera camera;
     private ModelBatch modelBatch;
     private Environment environment;
     private BitmapFont font;
     private SpriteBatch spriteBatch;
     private List<ModelInstance> myList;
+    private Vector3 f_vec;
+    private float delta;
+    private boolean first;
+    private Vector3 vec;
+    private String starString ;
     
-    private Scene scene;
+    public enum State {
+        THINKING, CHANGING, WINNING, STARTING
+    }
+    private State state = State.THINKING;
+    
+    private StarPool starPool;
 	
 	   public GameScreen ( final NewBraveConstellation gam ) {
 	        this.game = gam;
@@ -37,22 +48,31 @@ public class GameScreen implements Screen, InputProcessor
 	        
 	        camera = new PerspectiveCamera(80,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 	        camera.position.set(0f, 0f, 0f);
-	        camera.lookAt(coordinate.Transform2Vector( 30.0f , -20.0f, 10 ));
+	        f_vec = new Vector3(coordinate.Transform2Vector( 30.0f , -20.0f, 10 ));
+	        vec = new Vector3( 0.0f, 0.0f, 0.0f );
+	        
+	        camera.lookAt(f_vec);
 	        camera.near =0.1f;
 	        camera.far = 200f;
+	        
+	        starString = "starString";
 
 	        modelBatch = new ModelBatch();
 	        
 	        spriteBatch = new SpriteBatch();  
 	        
-	        scene = new Scene();
-	        scene.create();
+	        starPool = new StarPool();
+	        starPool.createPool();
+	        
+	        delta = 2.0f;
+	        
+	        first = true;
+	        
 	        
 	        font = new BitmapFont();
 	        font.setColor(Color.RED);
 	        
 	        environment = new Environment();
-	        
 	        environment.set(new ColorAttribute(ColorAttribute.AmbientLight,0.8f,0.8f,0.8f,1f));
 
 	        Gdx.input.setInputProcessor(this);
@@ -62,11 +82,22 @@ public class GameScreen implements Screen, InputProcessor
 	      Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 	      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT |GL20.GL_DEPTH_BUFFER_BIT);
 
-	        camera.update();
-	        modelBatch.begin(camera);
-	        modelBatch.render(scene.getInstances());
-	        modelBatch.end();
-		    System.out.println("domm");
+	        
+	      if( state == State.CHANGING )
+	      {
+	    	  Constellation con = starPool.take();
+	          camera.position.set(0f, 0f, 0f);
+	          camera.lookAt(coordinate.Transform2Vector( con.m_Declination , con.m_RightAscension, 10 ));
+	          
+	          state = State.THINKING;
+	      }
+	      
+	      camera.update();
+	      modelBatch.begin(camera);
+	      modelBatch.render(starPool.getInstances());
+	      modelBatch.end();
+
+		   System.out.println("domm");
 	        
 	   }
 
@@ -85,6 +116,7 @@ public class GameScreen implements Screen, InputProcessor
 	        return true;
 	    }
 
+	    
 	    @Override
 	    public boolean keyUp(int keycode) {
 	        if(keycode == Input.Keys.H)
@@ -97,10 +129,18 @@ public class GameScreen implements Screen, InputProcessor
 	            game.setScreen(new MainMenuScreen(game));
 	            dispose();
 	        }
+	        
+	        if(keycode == Input.Keys.C)
+	        {
+	  	      state = State.CHANGING;
+	        }
+	        
 	        if(keycode == Input.Keys.NUM_1)
 	        {
 	            camera.position.set(0f, 0f, 0f);
-	            camera.lookAt(coordinate.Transform2Vector( 75.0f , 216.0f, 10 ));
+	            
+		        f_vec = new Vector3(coordinate.Transform2Vector( 75.0f , 216.0f, 10 ));
+		        camera.lookAt(f_vec);
 	        }
 	        if(keycode == Input.Keys.NUM_2)
 	        {
@@ -217,11 +257,67 @@ public class GameScreen implements Screen, InputProcessor
 		// TODO Auto-generated method stub
 	      Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 	      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT |GL20.GL_DEPTH_BUFFER_BIT);
+	        
+		      if( state == State.CHANGING )
+		      {
+		    	  if ( first )
+		    	  {
+			    	  Constellation con = starPool.take();
+			    	  vec = new Vector3(coordinate.Transform2Vector( coordinate.Hours2Declination(con.m_Declination) , coordinate.Hours2RightAscension(con.m_RightAscension), 10 ));
+			    	  starString = con.m_Name;
+			    	  first = false;
+		    	  }
+		    	  
+		          //camera.position.set(0f, 0f, 0f);
+		         
+		   
+		          float dx = (vec.x - f_vec.x) / 100;
+		          float dy = (vec.y - f_vec.y) / 100;
+		          float dz = (vec.z - f_vec.z) / 100;
+		          
+		    
+		          f_vec.x = f_vec.x + dx;
+		          f_vec.y = f_vec.y + dy;
+		          f_vec.z = f_vec.z + dz;
+		          
 
-	        camera.update();
-	        modelBatch.begin(camera);
-	        modelBatch.render(scene.getInstances());
-	        modelBatch.end();
+		          camera.lookAt( f_vec );
+
+		          float dex = f_vec.x - vec.x; 
+		          float dey = f_vec.y - vec.y; 
+		          float dez = f_vec.z - vec.z; 
+		          
+		          if( (dex < 0.15) && (dey < 0.15) && (dez < 0.15) )
+		          {
+		   		      System.out.println("State changed");
+		        	  state = State.THINKING;
+		        	  first = true;
+		          }
+
+		      }
+		      
+//		      if( state == State.THINKING )
+//		      {
+//		    	  starString = 
+//
+//		      }
+		      
+		      
+		      camera.update();
+		      modelBatch.begin(camera);
+		      modelBatch.render(starPool.getInstances());
+		      modelBatch.end();    
+		      
+		      
+		      game.spriteBatch.begin();
+		      //game.spriteBatch.draw(splashScreen, 0, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		      game.font.draw(game.spriteBatch, starString , 10, 450);
+		      game.spriteBatch.end();
+	}
+	
+	private void ChangeTo( StarMap.Constellation con)
+	{
+		
 	}
 
 	

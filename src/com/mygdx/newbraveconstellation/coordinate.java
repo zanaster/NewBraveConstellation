@@ -38,6 +38,19 @@ public class coordinate {
 
 	}
 	
+	static public double Hours2RightAscension( double data )
+	{
+
+		
+	    double RightAscension = data * 15 ;
+	    
+//	    System.out.println("h="+h+", m="+m+", s="+s);
+//	    System.out.println("RightAscension = "+RightAscension);
+		
+		return RightAscension;	
+
+	}
+	
 	static public double Hours2Declination( String data )
 	{
 		Matcher matcher = Pattern.compile( "[-+]?\\d*\\.?\\d+([eE][-+]?\\d+)?" ).matcher( data );
@@ -55,6 +68,18 @@ public class coordinate {
 	    
 	    System.out.println("h="+a+", m="+m+", s="+s);
 	    System.out.println("Declination = "+Declination);
+		
+		return Declination;	
+
+	}
+	
+	static public double Hours2Declination( double data )
+	{
+
+	    double Declination = data;
+	    
+//	    System.out.println("h="+a+", m="+m+", s="+s);
+//	    System.out.println("Declination = "+Declination);
 		
 		return Declination;	
 

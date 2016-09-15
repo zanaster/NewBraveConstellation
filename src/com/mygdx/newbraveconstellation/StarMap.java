@@ -39,10 +39,12 @@ public class StarMap
 	}
 	
 	public Array<Star> m_List;
+	public Array<Constellation> m_ConstellationList;
 	
 	public StarMap()
 	{
 		m_List = new Array<Star>();
+		m_ConstellationList = new Array<Constellation>();
 	}
 	
 	public void create () 
@@ -59,6 +61,7 @@ public class StarMap
 		con.m_List.add( new Star( coordinate.Hours2RightAscension("17h 32m 12.90s"), coordinate.Hours2Declination("86Ă‚Â° 35Ă˘â‚¬Ë› 10.8"),	coordinate.SizeQualifier(4.35f), "Yildun"));
 	
 		m_List.addAll(con.m_List);
+		m_ConstellationList.add(con);
 	}
 	
 	public void create2()
@@ -79,6 +82,7 @@ public class StarMap
 
 		// add to StarMap list
 		m_List.addAll(con.m_List);
+		m_ConstellationList.add(con);
 	}
 
 	public void create3()
@@ -95,6 +99,7 @@ public class StarMap
 		
 		// add to StarMap list
 		m_List.addAll(con.m_List);
+		m_ConstellationList.add(con);
 	}
 	
 	
@@ -121,6 +126,7 @@ public class StarMap
 				
 		// add to StarMap list
 		m_List.addAll(con.m_List);
+		m_ConstellationList.add(con);
 	}
 	
 	public void create5()
@@ -148,6 +154,7 @@ public class StarMap
 	con.m_List.add( new Star( coordinate.Hours2RightAscension("13h 23m 56.40s"), coordinate.Hours2Declination("54Â° 55â€˛ 18.0â€ł"), coordinate.SizeQualifier(3.95f), "n"));
 	// add to StarMap list
 	m_List.addAll(con.m_List);
+	m_ConstellationList.add(con);
 	}
 	
 	public void create6()
@@ -173,6 +180,7 @@ public class StarMap
 //	con.m_List.add( new Star( coordinate.Hours2RightAscension("23h 25m 22.66s"), coordinate.Hours2Declination("23° 24′ 14.4″"), coordinate.SizeQualifier(4.42f), "n"));
 //	
 	m_List.addAll(con.m_List);
+	m_ConstellationList.add(con);
 	}
 	
 	public Array<Star> getInstances() {
